@@ -1,28 +1,32 @@
 # Question - Carry Forward
 ___
-Determine the minimum length of a subarray from array `A` that includes both the **highest** and **lowest** values present in the array **at least once**.
+Given `n` **non-negative integers** representing an elevation map where the width of each bar is `1`, compute how much water it can trap after raining.
 
 ## Constraints
-```1 <= |A| <= 2000```
+```
+n == height.length
+1 <= n <= 2 * 10^4
+0 <= height[i] <= 10^5
+```
 
 ## Input Format
-The only parameter is an ArrayList `A`.
+First and only argument is the vector `A`.
 
 ## Output Format
-Return the length of the smallest subarray containing at least one instance of both the array's minimum and maximum elements.
+Return one integer, the answer to the question.
 
 ## Example Input
 
 ### Input 1:
-``A = [1, 7, 2]``
+``height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]``
 
 ### Input 2:
-``A = [3, 7, 2, 6, 9]``
+``height = [4, 2, 0, 3, 2, 5]``
 
 ## Example Output
 
 ### Output 1:
-``2``
+``6``
 
 ### Output 2:
-``3``
+``9``

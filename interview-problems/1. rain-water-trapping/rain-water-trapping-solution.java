@@ -1,71 +1,46 @@
 public class Solution {
-    public int solve(ArrayList<Integer> A) {
-        //Initialize variable to store max and min
-        int max = Integer.MIN_VALUE;
-        int min = Integer.MAX_VALUE;
-
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public int trap(final List<Integer> A) {
         //determine array length
-        int length = A.size();
+        int arrayLength = A.size();
 
-        //find the maximum and minimum
-        for(int i=0; i<A.size(); i++) {
-            //get the element
-            int element = A.get(i);
+        //create variable to store suffix sum
+        int[] sMax = new int[arrayLength];
 
-            if(max < element) {
-                //element is larger, update max
-                max = element;
-            }
-
-            if(min > element) {
-                //minimum element found, update min
-                min = element;
-            }
-        }
-
-        //check if max and min are same, then return 1
-        if(max == min) {
-            return 1;
-        }
-
-        //create variable to store max and min index, and smallest length
-        int last_max_index = -1;
-        int last_min_index = -1;
-        int smallest_length = Integer.MAX_VALUE;
+        //determine suffix sum
+        sMax[arrayLength-1] = A.get(arrayLength-1);
 
         //loop through the array
-        for(int i=0; i<length; i++) {
-            //get element
-            int element = A.get(i);
-
-            if(element == max) {
-                //max element found
-                if(last_min_index != -1) {
-                    //already found minimum element, calculate sub array length
-                    int sub_length = i - last_min_index + 1;
-
-                    //update minimum value to the smallest_length
-                    smallest_length = Math.min(sub_length, smallest_length);
-                }
-
-                //update the max element index
-                last_max_index = i;
-            }
-            else if(element == min) {
-                //min element found
-                if(last_max_index != -1) {
-                    //already found max element, calculate sub array length
-                    int sub_length = i - last_max_index + 1;
-
-                    //update minimum value to smallest length
-                    smallest_length = Math.min(sub_length, smallest_length);
-                }
-
-                //update the min element index
-                last_min_index = i;
-            }
+        for(int i=arrayLength-2; i>=0; i--) {
+            //update the maximum till end in the current suffix position
+            sMax[i] = Math.max(sMax[i+1], A.get(i));
         }
 
-        return smallest_length;
+        //create variable to store maximum till i position
+        int pMax = A.get(0);
+
+        //variable to store water
+        int water = 0;
+
+        //loop through the array
+        for(int i=1; i<arrayLength-1; i++) {
+            //get left and right max
+            int leftMax = pMax;
+            int rightMax = sMax[i+1];
+
+            //calculate water content
+            int tempWater = Math.min(leftMax, rightMax) - A.get(i);
+
+            //update water
+            if(tempWater > 0) {
+                water += tempWater;
+            }
+
+            //update left max for next iteration
+            pMax = Math.max(A.get(i), leftMax);
+        }
+
+        //return water
+        return water;
     }
 }
